@@ -1,52 +1,131 @@
 /*
- * Copyright 2014-2023 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
  */
 
-import org.jetbrains.ValidatePublications
-import org.jetbrains.publicationChannels
-
-@Suppress("DSL_SCOPE_VIOLATION") // fixed in Gradle 8.1 https://github.com/gradle/gradle/pull/23639
 plugins {
-    id("org.jetbrains.conventions.base")
-    id("org.jetbrains.conventions.dokka")
-
-    alias(libs.plugins.kotlinx.binaryCompatibilityValidator)
-    alias(libs.plugins.nexusPublish)
+    id("dokkabuild.base")
+    idea
 }
 
-val dokka_version: String by project
+val publishedIncludedBuilds = listOf("runner-cli", "dokka-gradle-plugin", "runner-maven-plugin")
+val gradlePluginIncludedBuilds = listOf("dokka-gradle-plugin")
 
-group = "org.jetbrains.dokka"
-version = dokka_version
+addDependencyOnSameTasksOfIncludedBuilds("assemble", "build", "clean", "check")
 
+registerParentGroupTasks(
+    "publishing", taskNames = listOf(
+        "publishAllPublicationsToMavenCentralRepository",
+        "publishAllPublicationsToProjectLocalRepository",
+        "publishAllPublicationsToSnapshotRepository",
+        "publishAllPublicationsToSpaceDevRepository",
+        "publishAllPublicationsToSpaceTestRepository",
+        "publishToMavenLocal",
+    )
+) {
+    it.name in publishedIncludedBuilds
+}
 
-logger.lifecycle("Publication version: $dokka_version")
-tasks.register<ValidatePublications>("validatePublications")
+registerParentGroupTasks(
+    "gradle plugin", taskNames = listOf(
+        "publishPlugins",
+        "validatePlugins",
+    )
+) {
+    it.name in gradlePluginIncludedBuilds
+}
 
-nexusPublishing {
-    repositories {
-        sonatype {
-            username.set(System.getenv("SONATYPE_USER"))
-            password.set(System.getenv("SONATYPE_PASSWORD"))
+registerParentGroupTasks(
+    "bcv", taskNames = listOf(
+        "apiDump",
+        "apiCheck",
+        "apiBuild",
+    )
+) {
+    it.name in publishedIncludedBuilds
+}
+
+registerParentGroupTasks(
+    "verification", taskNames = listOf(
+        "test",
+    )
+)
+
+tasks.register("integrationTest") {
+    group = "verification"
+    description = "Runs integration tests of this project. Might take a while and require additional setup."
+
+    dependsOn(includedBuildTasks("integrationTest") {
+        it.name == "dokka-integration-tests"
+    })
+}
+
+fun addDependencyOnSameTasksOfIncludedBuilds(vararg taskNames: String) {
+    taskNames.forEach { taskName ->
+        tasks.named(taskName) {
+            dependsOn(includedBuildTasks(taskName))
         }
     }
 }
 
-val dokkaPublish by tasks.registering {
-    if (publicationChannels.any { it.isMavenRepository() }) {
-        finalizedBy(tasks.named("closeAndReleaseSonatypeStagingRepository"))
+fun registerParentGroupTasks(
+    groupName: String,
+    taskNames: List<String>,
+    includedBuildFilter: (IncludedBuild) -> Boolean = { true }
+) = taskNames.forEach { taskName ->
+    tasks.register(taskName) {
+        group = groupName
+        description = "A parent task that calls tasks with the same name in all subprojects and included builds"
+
+        dependsOn(subprojectTasks(taskName), includedBuildTasks(taskName, includedBuildFilter))
     }
 }
 
-apiValidation {
-    // note that subprojects are ignored by their name, not their path https://github.com/Kotlin/binary-compatibility-validator/issues/16
-    ignoredProjects += setOf(
-        // NAME                    PATH
-        "frontend",            // :plugins:base:frontend
+fun subprojectTasks(taskName: String): List<String> =
+    subprojects
+        .filter { it.getTasksByName(taskName, false).isNotEmpty() }
+        .map { ":${it.path}:$taskName" }
 
-        "integration-tests",   // :integration-tests
-        "gradle",              // :integration-tests:gradle
-        "cli",                 // :integration-tests:cli
-        "maven",               // integration-tests:maven
-    )
+
+fun includedBuildTasks(taskName: String, filter: (IncludedBuild) -> Boolean = { true }): List<TaskReference> =
+    gradle.includedBuilds
+        .filter { it.name != "build-logic" && it.name != "build-settings-logic" }
+        .filter(filter)
+        .mapNotNull { it.task(":$taskName") }
+
+
+tasks.wrapper {
+    doLast {
+        // Manually update the distribution URL to use cache-redirector.
+        // (Workaround for https://github.com/gradle/gradle/issues/17515)
+        propertiesFile.writeText(
+            propertiesFile.readText()
+                .replace(
+                    "https\\://services.gradle.org/",
+                    "https\\://cache-redirector.jetbrains.com/services.gradle.org/",
+                )
+        )
+    }
+}
+
+idea {
+    module {
+        // Mark directories as excluded so that they don't appear in IntelliJ's global search.
+        excludeDirs.addAll(
+            files(
+                ".idea",
+                ".husky",
+                ".kotlin",
+                "dokka-integration-tests/.kotlin",
+                "dokka-runners/dokka-gradle-plugin/.kotlin",
+                "dokka-runners/runner-cli/.kotlin",
+                "dokka-runners/runner-maven-plugin/.kotlin",
+                "dokka-runners/dokka-gradle-plugin/src/testFunctional/resources/KotlinDslAccessorsTest/",
+
+                "dokka-integration-tests/gradle/src/testExampleProjects/expectedData",
+                "dokka-integration-tests/gradle/projects/it-android/expectedData",
+                "dokka-integration-tests/gradle/projects/it-android-compose/expectedData",
+                "dokka-integration-tests/gradle/projects/it-kotlin-multiplatform/expectedData",
+            )
+        )
+    }
 }

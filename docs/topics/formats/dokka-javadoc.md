@@ -4,7 +4,7 @@
 > Successful integration with tools that accept Java's Javadoc HTML as input is not guaranteed.
 > **You use it at your own risk.**
 >
-{type="warning"}
+{style="warning"}
 
 Dokka's Javadoc output format is a lookalike of Java's
 [Javadoc HTML format](https://docs.oracle.com/en/java/javase/19/docs/api/index.html). 
@@ -15,17 +15,17 @@ or an exact copy.
 ![Screenshot of javadoc output format](javadoc-format-example.png){width=706}
 
 All Kotlin code and signatures are rendered as seen from Java's perspective. This is achieved with our
-[Kotlin as Java Dokka plugin](https://github.com/Kotlin/dokka/tree/master/plugins/kotlin-as-java), which comes bundled and
+[Kotlin as Java Dokka plugin](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-kotlin-as-java), which comes bundled and
 applied by default for this format.
 
 The Javadoc output format is implemented as a [Dokka plugin](dokka-plugins.md), and it is maintained by the Dokka team.
-It is open source and you can find the source code on [GitHub](https://github.com/Kotlin/dokka/tree/master/plugins/javadoc).
+It is open source and you can find the source code on [GitHub](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-javadoc).
 
 ## Generate Javadoc documentation
 
 > The Javadoc format does not support multiplatform projects.
 >
-{type="warning"}
+{style="warning"}
 
 
 <tabs group="build-script">
