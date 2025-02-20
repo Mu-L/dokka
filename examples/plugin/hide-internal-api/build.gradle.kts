@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2023 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ * Copyright 2014-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
  */
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -7,8 +7,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URI
 
 plugins {
-    kotlin("jvm") version "1.9.0"
-    id("org.jetbrains.dokka") version "1.9.0"
+    kotlin("jvm") version "2.1.0"
+    id("org.jetbrains.dokka") version "2.0.0"
     `maven-publish`
     signing
 }
@@ -31,12 +31,13 @@ dependencies {
     testImplementation("org.jetbrains.dokka:dokka-base-test-utils:$dokkaVersion")
 }
 
+kotlin {
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
+}
+
 val dokkaOutputDir = "$buildDir/dokka"
 
 tasks {
-    withType<KotlinCompile>().configureEach {
-        compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
-    }
     dokkaHtml {
         outputDirectory.set(file(dokkaOutputDir))
     }

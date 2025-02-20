@@ -67,14 +67,14 @@ See [Configuration examples](#configuration-examples) if you are not sure where 
 > for which documentation is to be generated. Make sure to apply the Kotlin Gradle Plugin or
 > [configure source sets](#source-set-configuration) manually.
 >
-{type="note"}
+{style="note"}
 
 > If you are using Dokka in a
 > [precompiled script plugin](https://docs.gradle.org/current/userguide/custom_plugins.html#sec:precompiled_plugins),
 > you need to add the [Kotlin Gradle plugin](https://kotlinlang.org/docs/gradle-configure-project.html#apply-the-plugin) 
 > as a dependency for it to work properly.
 >
-{type="note"}
+{style="note"}
 
 If you cannot use the plugins DSL for some reason, you can use
 [the legacy method](https://docs.gradle.org/current/userguide/plugins.html#sec:old_plugin_application) of applying
@@ -90,14 +90,14 @@ and [multi-project](#multi-project-builds) builds.
 
 Use the following tasks to build documentation for simple, single-project applications and libraries:
 
-| **Task**       | **Description**                                                                     |
-|----------------|-------------------------------------------------------------------------------------|
-| `dokkaHtml`    | Generates documentation in [HTML](dokka-html.md) format.                                  |
+| **Task**    | **Description**                                          |
+|-------------|----------------------------------------------------------|
+| `dokkaHtml` | Generates documentation in [HTML](dokka-html.md) format. |
 
 #### Experimental formats
 
-| **Task**       | **Description**                                                                     |
-|----------------|-------------------------------------------------------------------------------------|
+| **Task**       | **Description**                                                                           |
+|----------------|-------------------------------------------------------------------------------------------|
 | `dokkaGfm`     | Generates documentation in [GitHub Flavored Markdown](dokka-markdown.md#gfm) format.      |
 | `dokkaJavadoc` | Generates documentation in [Javadoc](dokka-javadoc.md) format.                            |
 | `dokkaJekyll`  | Generates documentation in [Jekyll compatible Markdown](dokka-markdown.md#jekyll) format. |
@@ -119,21 +119,21 @@ cross-project references.
 
 Dokka creates the following tasks for **parent** projects automatically:
 
-| **Task**                 | **Description**                                                        |
-|--------------------------|------------------------------------------------------------------------|
-| `dokkaHtmlMultiModule`   | Generates multi-module documentation in [HTML](dokka-html.md) output format. |
+| **Task**               | **Description**                                                              |
+|------------------------|------------------------------------------------------------------------------|
+| `dokkaHtmlMultiModule` | Generates multi-module documentation in [HTML](dokka-html.md) output format. |
 
 #### Experimental formats (multi-module)
 
-| **Task**                 | **Description**                                                                                         |
-|--------------------------|---------------------------------------------------------------------------------------------------------|
+| **Task**                 | **Description**                                                                                               |
+|--------------------------|---------------------------------------------------------------------------------------------------------------|
 | `dokkaGfmMultiModule`    | Generates multi-module documentation in [GitHub Flavored Markdown](dokka-markdown.md#gfm) output format.      |
 | `dokkaJekyllMultiModule` | Generates multi-module documentation in [Jekyll compatible Markdown](dokka-markdown.md#jekyll) output format. |
 
 > The [Javadoc](dokka-javadoc.md) output format does not have a `MultiModule` task, but a [`Collector`](#collector-tasks) task can
 > be used instead.
 >
-{type="note"}
+{style="note"}
 
 By default, you can find ready-to-use documentation under `{parentProject}/build/dokka/{format}MultiModule` directory.
 
@@ -142,20 +142,21 @@ By default, you can find ready-to-use documentation under `{parentProject}/build
 Given a project with the following structure:
 
 ```text
-parentProject
-    └── childProjectA
-        ├── demo
-            ├── ChildProjectAClass
-    └── childProjectB
-        ├── demo
-            ├── ChildProjectBClass
+.
+└── parentProject/
+    ├── childProjectA/
+    │   └── demo/
+    │       └── ChildProjectAClass
+    └── childProjectB/
+        └── demo/
+            └── ChildProjectBClass
 ```
 
 These pages are generated after running `dokkaHtmlMultiModule`:
 
 ![Screenshot for output of dokkaHtmlMultiModule task](dokkaHtmlMultiModule-example.png){width=600}
 
-See our [multi-module project example](https://github.com/Kotlin/dokka/tree/master/examples/gradle/dokka-multimodule-example)
+See our [multi-module project example](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/examples/gradle/dokka-multimodule-example)
 for more details.
 
 #### Collector tasks
@@ -172,27 +173,28 @@ build that contains all declarations from the subprojects.
 
 > Use the `dokkaJavadocCollector` task if you need to create Javadoc documentation for your multi-project build.
 >
-{type="tip"}
+{style="tip"}
 
 #### Collector results
 
 Given a project with the following structure:
 
 ```text
-parentProject
-    └── childProjectA
-        ├── demo
-            ├── ChildProjectAClass
-    └── childProjectB
-        ├── demo
-            ├── ChildProjectBClass
+.
+└── parentProject/
+    ├── childProjectA/
+    │   └── demo/
+    │       └── ChildProjectAClass
+    └── childProjectB/
+        └── demo/
+            └── ChildProjectBClass
 ```
 
 These pages are generated after running `dokkaHtmlCollector`:
 
 ![Screenshot for output of dokkaHtmlCollector task](dokkaHtmlCollector-example.png){width=706}
 
-See our [multi-module project example](https://github.com/Kotlin/dokka/tree/master/examples/gradle/dokka-multimodule-example)
+See our [multi-module project example](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/examples/gradle/dokka-multimodule-example)
 for more details.
 
 #### Partial tasks
@@ -208,12 +210,12 @@ However, you can [configure](#subproject-configuration) `Partial` tasks to custo
 > Output generated by `Partial` tasks contains unresolved HTML templates and references, so it cannot be used
 > on its own without post-processing done by the parent's [`MultiModule`](#multimodule-tasks) task.
 > 
-{type="warning"}
+{style="warning"}
 
 > If you want to generate documentation for a single subproject only, use
 > [single-project tasks](#single-project-builds). For example, `:subprojectName:dokkaHtml`.
 >
-{type="note"}
+{style="note"}
 
 ## Build javadoc.jar
 
@@ -269,7 +271,7 @@ tasks.register('dokkaJavadocJar', Jar.class) {
 > from the `javadoc.jar`. It works well with the HTML format as demonstrated in
 > [this example](https://javadoc.io/doc/com.trib3/server/latest/index.html).
 >
-{type="tip"}
+{style="tip"}
 
 ## Configuration examples
 
@@ -306,15 +308,15 @@ Multiplatform:
 ```text
 .
 ├── build.gradle.kts
-└── src
-    └── commonMain
-        └── kotlin
-            └── Common.kt
-    └── jvmMain
-        └── kotlin
-            └── JvmUtils.kt
-    └── nativeMain
-        └── kotlin
+└── src/
+    ├── commonMain/
+    │   └── kotlin/
+    │       └── Common.kt
+    ├── jvmMain/
+    │   └── kotlin/
+    │       └── JvmUtils.kt
+    └── nativeMain/
+        └── kotlin/
             └── NativeUtils.kt
 ```
 
@@ -337,15 +339,15 @@ Multiplatform:
 ```text
 .
 ├── build.gradle
-└── src
-    └── commonMain
-        └── kotlin
-            └── Common.kt
-    └── jvmMain
-        └── kotlin
-            └── JvmUtils.kt
-    └── nativeMain
-        └── kotlin
+└── src/
+    ├── commonMain/
+    │   └── kotlin/
+    │       └── Common.kt
+    ├── jvmMain/
+    │   └── kotlin/
+    │       └── JvmUtils.kt
+    └── nativeMain/
+        └── kotlin/
             └── NativeUtils.kt
 ```
 
@@ -367,11 +369,11 @@ plugins {
 }
 
 tasks.dokkaHtml {
-    outputDirectory.set(buildDir.resolve("documentation/html"))
+    outputDirectory.set(layout.buildDirectory.dir("documentation/html"))
 }
 
 tasks.dokkaGfm {
-    outputDirectory.set(buildDir.resolve("documentation/markdown"))
+    outputDirectory.set(layout.buildDirectory.dir("documentation/markdown"))
 }
 ```
 
@@ -479,17 +481,17 @@ typically have the following structure:
 .
 ├── build.gradle.kts
 ├── settings.gradle.kts
-├── subproject-A
-    └── build.gradle.kts
-    └── src
-        └── main
-            └── kotlin
-                └── HelloFromA.kt
-├── subproject-B
-    └── build.gradle.kts
-    └── src
-        └── main
-            └── kotlin
+├── subproject-A/
+│   ├── build.gradle.kts
+│   └── src/
+│       └── main/
+│           └── kotlin/
+│               └── HelloFromA.kt
+└── subproject-B/
+    ├── build.gradle.kts
+    └── src/
+        └── main/
+            └── kotlin/
                 └── HelloFromB.kt
 ```
 
@@ -500,17 +502,17 @@ typically have the following structure:
 .
 ├── build.gradle
 ├── settings.gradle
-├── subproject-A
-    └── build.gradle
-    └── src
-        └── main
-            └── kotlin
-                └── HelloFromA.kt
-├── subproject-B
-    └── build.gradle
-    └── src
-        └── main
-            └── kotlin
+├── subproject-A/
+│   ├── build.gradle
+│   └── src/
+│       └── main/
+│           └── kotlin/
+│               └── HelloFromA.kt
+└── subproject-B/
+    ├── build.gradle
+    └── src/
+        └── main/
+            └── kotlin/
                 └── HelloFromB.kt
 ```
 
@@ -543,7 +545,7 @@ subprojects {
 
     // configure only the HTML task
     tasks.dokkaHtmlPartial {
-        outputDirectory.set(buildDir.resolve("docs/partial"))
+        outputDirectory.set(layout.buildDirectory.dir("docs/partial"))
     }
 
     // configure all format tasks at once
@@ -602,7 +604,7 @@ apply(plugin = "org.jetbrains.dokka")
 
 // configuration for subproject-A only.
 tasks.dokkaHtmlPartial {
-    outputDirectory.set(buildDir.resolve("docs/partial"))
+    outputDirectory.set(layout.buildDirectory.dir("docs/partial"))
 }
 ```
 
@@ -690,7 +692,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 tasks.withType<DokkaTask>().configureEach {
     moduleName.set(project.name)
     moduleVersion.set(project.version.toString())
-    outputDirectory.set(buildDir.resolve("dokka/$name"))
+    outputDirectory.set(layout.buildDirectory.dir("dokka/$name"))
     failOnWarning.set(false)
     suppressObviousFunctions.set(true)
     suppressInheritedMembers.set(false)
@@ -761,7 +763,7 @@ tasks.withType(DokkaTask.class) {
     <def title="suppressObviousFunctions">
         <p>Whether to suppress obvious functions.</p>
         <p>
-            A function is considered to be obvious if it is:
+            A function is considered to be obvious if it is:</p>
             <list>
                 <li>
                     Inherited from <code>kotlin.Any</code>, <code>Kotlin.Enum</code>, <code>java.lang.Object</code> or
@@ -772,7 +774,6 @@ tasks.withType(DokkaTask.class) {
                     <code>dataClass.componentN</code> or <code>dataClass.copy</code>.
                 </li>
             </list>
-        </p>
         <p>Default: <code>true</code></p>
     </def>
     <def title="suppressInheritedMembers">
@@ -1166,13 +1167,12 @@ tasks.withType(DokkaTask.class) {
             is <code>#L10</code>.
         </p>
         <p>
-            Suffixes used by popular services:
+            Suffixes used by popular services:</p>
             <list>
                 <li>GitHub: <code>#L</code></li>
                 <li>GitLab: <code>#L</code></li>
                 <li>Bitbucket: <code>#lines-</code></li>
             </list>
-        </p>
         <p>Default: <code>#L</code></p>
     </def>
 </deflist>
@@ -1400,7 +1400,7 @@ import java.net.URL
 tasks.withType<DokkaTask>().configureEach {
     moduleName.set(project.name)
     moduleVersion.set(project.version.toString())
-    outputDirectory.set(buildDir.resolve("dokka/$name"))
+    outputDirectory.set(layout.buildDirectory.dir("dokka/$name"))
     failOnWarning.set(false)
     suppressObviousFunctions.set(true)
     suppressInheritedMembers.set(false)
@@ -1438,7 +1438,7 @@ tasks.withType<DokkaTask>().configureEach {
             }
 
             externalDocumentationLink {
-                url.set(URL("https://kotlinlang.org/api/latest/jvm/stdlib/"))
+                url.set(URL("https://kotlinlang.org/api/core/kotlin-stdlib/"))
                 packageListUrl.set(
                     rootProject.projectDir.resolve("stdlib.package.list").toURL()
                 )
@@ -1517,7 +1517,7 @@ tasks.withType(DokkaTask.class) {
             }
 
             externalDocumentationLink {
-                url.set(new URL("https://kotlinlang.org/api/latest/jvm/stdlib/"))
+                url.set(new URL("https://kotlinlang.org/api/core/kotlin-stdlib/"))
                 packageListUrl.set(
                         file("stdlib.package.list").toURL()
                 )

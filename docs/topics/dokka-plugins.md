@@ -22,9 +22,9 @@ From there, the plugin extends Dokka by itself - no further action is needed.
 >
 > If you notice problems like this, it's a good idea to check which plugins are applied and what they do.
 > 
-{type="note"}
+{style="note"}
 
-Let's have a look at how you can apply the [mathjax plugin](https://github.com/Kotlin/dokka/tree/master/plugins/mathjax)
+Let's have a look at how you can apply the [mathjax plugin](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-mathjax)
 to your project:
 
 <tabs group="build-script">
@@ -49,7 +49,7 @@ dependencies {
 > When documenting [multi-project](dokka-gradle.md#multi-project-builds) builds, you need to apply Dokka plugins within
 > subprojects as well as in their parent project.
 >
-{type="note"}
+{style="note"}
 
 </tab>
 <tab title="Groovy" group-key="groovy">
@@ -73,7 +73,7 @@ dependencies {
 > When documenting [multi-project](dokka-gradle.md#multi-project-builds) builds, you need to apply Dokka plugins within
 > subprojects as well as in their parent project.
 >
-{type="note"}
+{style="note"}
 
 </tab>
 <tab title="Maven" group-key="mvn">
@@ -266,13 +266,13 @@ If you are using [JSON configuration](dokka-cli.md#run-with-json-configuration),
 
 Here are some notable Dokka plugins that you might find useful:
 
-| **Name**                                                                                                  | **Description**                                                                                              |
-|-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| [Android documentation plugin](https://github.com/Kotlin/dokka/tree/master/plugins/android-documentation) | Improves the documentation experience on Android                                                             |
-| [Versioning plugin](https://github.com/Kotlin/dokka/tree/master/plugins/versioning)                       | Adds version selector and helps to organize documentation for different versions of your application/library |
-| [MermaidJS HTML plugin](https://github.com/glureau/dokka-mermaid)                                         | Renders [MermaidJS](https://mermaid-js.github.io/mermaid/#/) diagrams and visualizations found in KDocs      |
-| [Mathjax HTML plugin](https://github.com/Kotlin/dokka/tree/master/plugins/mathjax)                        | Pretty prints mathematics found in KDocs                                                                     |
-| [Kotlin as Java plugin](https://github.com/Kotlin/dokka/tree/master/plugins/kotlin-as-java)               | Renders Kotlin signatures as seen from Java's perspective                                                    |
+| **Name**                                                                                                                           | **Description**                                                                                              |
+|------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| [Android documentation plugin](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-android-documentation) | Improves the documentation experience on Android                                                             |
+| [Versioning plugin](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-versioning)                       | Adds version selector and helps to organize documentation for different versions of your application/library |
+| [MermaidJS HTML plugin](https://github.com/glureau/dokka-mermaid)                                                                  | Renders [MermaidJS](https://mermaid-js.github.io/mermaid/#/) diagrams and visualizations found in KDocs      |
+| [Mathjax HTML plugin](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-mathjax)                        | Pretty prints mathematics found in KDocs                                                                     |
+| [Kotlin as Java plugin](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-kotlin-as-java)              | Renders Kotlin signatures as seen from Java's perspective                                                    |
 
 If you are a Dokka plugin author and would like to add your plugin to this list, get in touch with maintainers
 via [Slack](dokka-introduction.md#community) or [GitHub](https://github.com/Kotlin/dokka/).

@@ -3,12 +3,12 @@
 > The Markdown output formats are still in Alpha, so you may find bugs and experience migration issues when using them.
 > **You use them at your own risk.**
 >
-{type="warning"}
+{style="warning"}
 
 Dokka is able to generate documentation in [GitHub Flavored](#gfm) and [Jekyll](#jekyll) compatible Markdown.
 
 These formats give you more freedom in terms of hosting documentation as the output can be embedded right into your 
-documentation website. For example, see [OkHttp's API reference](https://square.github.io/okhttp/4.x/okhttp/okhttp3/)
+documentation website. For example, see [OkHttp's API reference](https://square.github.io/okhttp/5.x/okhttp/okhttp3/)
 pages.
 
 Markdown output formats are implemented as [Dokka plugins](dokka-plugins.md), maintained by the Dokka team, and 
@@ -54,13 +54,13 @@ dependency:
 
 After configuring this, running the `dokka:dokka` goal produces documentation in GFM format.
 
-For more information, see the Mavin plugin documentation for [Other output formats](dokka-maven.md#other-output-formats).
+For more information, see the Maven plugin documentation for [Other output formats](dokka-maven.md#other-output-formats).
 
 </tab>
 <tab title="CLI" group-key="cli">
 
 Since GFM format is implemented as a [Dokka plugin](dokka-plugins.md#apply-dokka-plugins), you need to 
-[download the JAR file]((https://repo1.maven.org/maven2/org/jetbrains/dokka/gfm-plugin/%dokkaVersion%/gfm-plugin-%dokkaVersion%.jar))
+[download the JAR file](https://repo1.maven.org/maven2/org/jetbrains/dokka/gfm-plugin/%dokkaVersion%/gfm-plugin-%dokkaVersion%.jar)
 and pass it to `pluginsClasspath`.
 
 Via [command line options](dokka-cli.md#run-with-command-line-options):
@@ -90,7 +90,7 @@ For more information, see the CLI runner's documentation for [Other output forma
 </tab>
 </tabs>
 
-You can find the source code [on GitHub](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/plugins/gfm).
+You can find the source code [on GitHub](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-gfm).
 
 ## Jekyll
 
@@ -170,4 +170,4 @@ For more information, see the CLI runner's documentation for [Other output forma
 </tab>
 </tabs>
 
-You can find the source code on [GitHub](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/plugins/jekyll).
+You can find the source code on [GitHub](https://github.com/Kotlin/dokka/tree/%dokkaVersion%/dokka-subprojects/plugin-jekyll).
